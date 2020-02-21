@@ -1,0 +1,26 @@
+---
+- name: Create configuration directory
+  become: true
+  file:
+    path: "{{ config_dir }}"
+    state: directory
+    owner: "{{ zecminer_user }}"
+    group: "{{ zecminer_user }}"
+  tags:
+    - config
+
+- name: Copy Zecminer configuration in place
+  become: true
+  when: zecminer_config is defined and zecminer_config|length > 0
+  template:
+    src: "miner.cfg.j2"
+    dest: "{{ config_dir }}/miner.cfg"
+    owner: "{{ zecminer_user }}"
+    group: "{{ zecminer_user }}"
+    mode: 0644
+  vars:
+    config: "{{ zecminer_config }}"
+  notify:
+    - Restart service
+  tags:
+    - config

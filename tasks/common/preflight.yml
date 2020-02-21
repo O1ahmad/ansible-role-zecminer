@@ -33,6 +33,18 @@
   tags:
     - preflight
 
+- name: Add Nvidia Graphics PPA
+  become: true
+  when: ansible_os_family|lower == "debian"
+  apt_repository:
+    repo: 'ppa:graphics-drivers/ppa'
+    state: present
+    update_cache: true
+  tags:
+    - install
+    - package
+    - debian
+
 - name: Update graphics/cuda packages
   become: true
   package:

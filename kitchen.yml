@@ -95,3 +95,10 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/launch
+  - name: uninstall
+    provisioner:
+      playbook: test/integration/uninstall/default_playbook.yml
+      idempotency_test: false
+    verifier:
+      inspec_tests:
+        - path: test/integration/uninstall

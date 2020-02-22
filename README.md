@@ -73,6 +73,9 @@ In typical `INI` or `TOML` fashion, individual sets of configurations consist of
 
 Reference [here](https://zec.nanopool.org/) for a list of server pool connection settings and [here](https://gist.github.com/0x0I/8a02072f7a2729bd8a0ab626d89c16d2) for an example config.
 
+`config_dir: </path/to/configuration/dir>` (**default**: `{{ install_dir }}`)
+- path on target host where the `zecminer` configuration file should be rendered
+
 Each of these configurations can be expressed using the `zecminer_configs` hash, which contains a list of various `zecminer` configuration options (hash) objects organized according to the following:
 * common - miner configuration options common to all server connections
 * server - custom server connection and operational configuration options to the specified server

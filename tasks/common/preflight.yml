@@ -33,6 +33,11 @@
   tags:
     - preflight
 
+- name: Ensure proper configuration directory default
+  when: config_dir is not defined or config_dir|length == 0
+  set_fact:
+    config_dir: "{{ install_dir }}"
+
 - name: Add Nvidia Graphics PPA
   become: true
   when: ansible_os_family|lower == "debian"

@@ -102,147 +102,19 @@ Each `zecminer_configs` entry is a hash representing the equivalent of a configu
         pass: user1-password
   ```
   
-##### Entrypoints
-
-A part of what is termed as Traefik's "static configuration", entryPoints are the network entry points into Traefik. They define the port which will receive the requests (whether HTTP or TCP). Most of what happens to the connection between the clients and Traefik, and then between Traefik and the backend servers, is configured through the entrypoints in addition to routers.
-
-See [here](https://docs.traefik.io/routing/entrypoints/) for more details regarding these options and suggestions on their usage.
-
-`[traefik_configs: <entry>: config: entrypoints:] <YAML>` (**default**: )
-- specifies parameters that manage Traefik entrypoint registration
-
-###### Example
-
- ```yaml
-  traefik_configs:
-    - name: example-entrypoint
-      # type: yaml
-      # path: /etc/traefik
-      config:
-        entryPoints:
-          web:
-            address: ":80"
-          websecure:
-            address: ":443"
-  ```
-  
-##### Routers
-
-A router is in charge of connecting incoming requests to the services that can handle them. In the process, routers may use pieces of middleware to update the request, or act before forwarding the request to the service.
-
-See [here](https://docs.traefik.io/routing/routers/) for more details regarding these options and suggestions on their usage.
-
-`[traefik_configs: <entry>: config: <http|tcp>: routers] <YAML>` (**default**: )
-- specifies parameters that manage Traefik router registration
-
-###### Example
-
- ```yaml
-  traefik_configs:
-    - name: example-router
-      config:
-        http:
-          routers:
-            my-router:
-              rule: "Path(`/foo`)"
-              service: service-foo
-  ```
-  
-##### Middlewares
-
-Attached to the routers, pieces of middleware are a means of tweaking the requests before they are sent to your service (or before the answer from the services are sent to the clients). There are several available middleware in Traefik, some can modify the request, the headers, some are in charge of redirections, some add authentication, and so on.
-
-Pieces of middleware can be combined in chains to fit every scenario.
-
-See [here](https://docs.traefik.io/middlewares/overview/) for more details regarding these options and suggestions on their usage.
-
-`[traefik_configs: <entry>: config: <http|tcp>: middlewares] <YAML>` (**default**: )
-- specifies parameters that manage Traefik middleware registration
-
-###### Example
-
- ```yaml
-  traefik_configs:
-    - name: example-middleware
-      config:
-        http:
-          routers:
-            router1:
-              service: myService
-              middlewares:
-                - "foo-add-prefix"
-              rule: "Host(`example.com`)"
-          middlewares:
-            foo-add-prefix:
-              addPrefix:
-                prefix: "/foo"
-  ```
-  
-##### Services
-
-Services are responsible for configuring how to reach the actual services that will eventually handle the incoming requests. Nested load balancers are able to load balance the requests between multiple instances of your services.
-
-See [here](https://docs.traefik.io/routing/services/) for more details regarding available configuration settings and suggested usage.
-
-`[traefik_configs: <entry>: config: <http|tcp>: services] <YAML>` (**default**: )
-- specifies parameters that manage Traefik service registration
-
-###### Example
-
- ```yaml
-  traefik_configs:
-    - name: example-service
-      config:
-        http:
-          services:
-            my-service:
-              loadBalancer:
-                servers:
-                - url: "http://private-ip-server-1/"
-                - url: "http://private-ip-server-2/"
-  ```
-
-##### Providers
-
-Configuration discovery in Traefik is achieved through Providers. The providers are existing infrastructure components, whether orchestrators, container engines, cloud providers, or key-value stores. The idea is that Traefik will query the providers' API in order to find relevant information about routing, and each time Traefik detects a change, it dynamically updates the routes.
-
-Traefik providers are categorized according to the following 4 groups:
-* Label based (each deployed server/container has a set of labels attached to it)
-* Key-Value based (each deployed server/container updates a key-value store with relevant information)
-* Annotation based (a separate object, with annotations, defines the characteristics of the server/container)
-* File based (the good old configuration file)
-
-See [here](https://docs.traefik.io/providers/overview/#supported-providers) for a list of supported providers and more details regarding available configuration settings and suggested usage.
-
-`[traefik_configs: <entry>: config: providers] <YAML>` (**default**: )
-- specifies parameters that manage Traefik provider registration
-
-###### Example
-
- ```yaml
-  traefik_configs:
-    - name: example-provider
-      config:
-        providers:
-          consulCatalog:
-            endpoint:
-              address: http://127.0.0.1:8500
-              # ...
-  ```
-  
 #### Launch
 
-This role supports launching a `traefik` server proxy utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool, which manages the service as a background process or daemon subject to the configuration and execution potential provided by its underlying management framework.
+This role supports launching a `zecminer` utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool, which manages the service as a background process or daemon subject to the configuration and execution potential provided by its underlying management framework.
 
 _The following variables can be customized to manage the service's **systemd** [Service] unit definition and execution profile/policy:_
 
-`extra_run_args: <traefik-cli-options>` (**default**: `[]`)
-- list of `traefik` commandline arguments to pass to the binary at runtime for customizing launch.
+`extra_run_args: <zecminer-cli-options>` (**default**: `[]`)
+- list of `zecminer` commandline arguments to pass to the binary at runtime for customizing launch
 
-Supporting full expression of `traefik`'s [cli](https://docs.traefik.io/reference/static-configuration/cli/) and, subsequently the full set of configuration options as referenced and described above, this variable enables the launch to be customized according to the user's exact specification.
+Supporting full expression of `zecminer`'s [cli](https://gist.github.com/0x0I/8a57be009fcdb3a006262309aadd741c) and, conserquently the full set of configuration options as referenced and described above, this variable enables the launch to be customized according to the user's exact specification.
 
 `custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
-- hash of settings used to customize the `[Service]` unit configuration and execution environment of the *Traefik* **systemd** service.
+- hash of settings used to customize the `[Service]` unit configuration and execution environment of the *Zecminer* **systemd** service.
 
 #### Uninstall
 
@@ -251,7 +123,7 @@ Support for uninstalling and removing artifacts necessary for provisioning allow
 _The following variable(s) can be customized to manage this uninstall process:_
 
 `perform_uninstall: <true | false>` (**default**: `false`)
-- whether to uninstall and remove all artifacts and remnants of this `traefik` installation on a target host (**see**: `handlers/main.yml` for details)
+- whether to uninstall and remove all artifacts and remnants of this `zecminer` installation on a target host (**see**: `handlers/main.yml` for details)
 
 Dependencies
 ------------
@@ -264,114 +136,74 @@ default example:
 ```
 - hosts: all
   roles:
-  - role: 0x0I.traefik
+  - role: 0x0I.zecminer
 ```
 
-download and install specific version of Traefik binaries:
+download and install specific version of Zecminer binaries:
 ```
 - hosts: all
   roles:
-  - role: 0x0I.traefik
+  - role: 0x0I.zecminer
     vars:
       install_type: archive
-      archive_url: https://github.com/containous/traefik/releases/download/v2.1.4/traefik_v2.1.4_linux_amd64.tar.gz
-      archive_checksum: a0023d3b01c881cffc89b5b69d51d8e86d4e9ac87e87d57a9029731a83780893
+      archive_url: https://github.com/nanopool/ewbf-miner/releases/download/v0.1.0b/Zec.miner.0.1.0b.Linux.Bin.tar.gz
 ```
 
 enable debug logging for troubleshooting purposes:
 ```
 - hosts: all
   roles:
-  - role: 0x0I.traefik
+  - role: 0x0I.zecminer
     vars:
-      traefik_configs:
-        - name: log-settings
-          config:
-            log:
-              level: DEBUG
-              filePath: /var/log/traefik/traefik.log
-              format: json
-            accessLog:
-              filePath: /var/log/traefik/access.log
-              format: json
-              bufferingSize: 100
-              filters:
-                statusCodes:
-                - 500-511
-                - 400-451
-                - 308
-              retryAttempts: true
-              minDuration: 10ms
+      zecminer_configs:
+        - name: common
+          settings:
+            log: 1
+            logfile: /var/log/miner.log
 ```
 
-enable Prometheus metrics collection and reporting:
+enable mining API server on custom listening port (via API command-line + config):
 ```
 - hosts: all
   roles:
-  - role: 0x0I.traefik
+  - role: 0x0I.zecminer
     vars:
-      traefik_configs:
-        - name: prometheus-metrics
-          config:
-            entryPoints:
-              metrics:
-                address: ":8082"
-            metrics:
-              prometheus:
-                entryPoint: metrics
-                addEntryPointsLabels: true
-                addServicesLabels: true
-                buckets:
-                  - 0.1
-                  - 0.3
-                  - 1.2
-                  - 5.0
+      extra_run_args:
+        - --api 0.0.0.0:12345
+      zecminer_configs:
+        - name: common
+          settings:
+            api: 0.0.0.0:12345
 ```
 
-configure Consul provider:
+configure main and backup server pools for mining operations:
+ ```yaml
+  zecminer_configs:
+    # main server pool connection properties
+    - name: server
+      settings:
+        server: zec-us-east1.nanopool.org
+        port: 6666
+        user: user-key
+        pass: user-password
+    # back server pool connection properties
+    - name: server
+      settings:
+        server:  zec-eu1.nanopool.org
+        port: 6666
+        user: user-key
+        pass: user-password
+  ```
+  
+manage host resource allocation for mining operations:
 ```
 - hosts: all
   roles:
-  - role: 0xOI.traefik
+  - role: 0x0I.zecminer
     vars:
-      traefik_configs:
-        - name: consul-provider
-          config:
-           providers:
-             consulCatalog:
-               stale: false
-               cache: true
-               exposedByDefault: false
-               endpoint:
-                 address: https://127.0.0.1:8500
-                 scheme: https
-                 datacenter: staging
-               tls:
-                 ca: path/to/ca.crt
-                 caOptional: true
-                 cert: path/to/foo.cert
-                 key: path/to/foo.key
-                 insecureSkipVerify: true
-```
-
-activate Jaeger tracing:
-```
-- hosts: all
-  roles:
-  - role: 0x0I.traefik
-    vars:
-      traefik_configs:
-        - name: jaeger-tracing
-          config:
-            tracing:
-              jaeger:
-                samplingServerURL: http://localhost:5778/sampling
-                samplingType: const
-                samplingParam: 1.0
-                localAgentHostPort: 127.0.0.1:6831
-                gen128Bit: true
-                traceContextHeaderName: example-trace-id
-                endpoint: http://127.0.0.1:14268/api/traces?format=jaeger.thrift
+      custom_unit_properties:
+        CPUQuota: 400%
+        MemoryLimit: 4GB
 ```
 
 License

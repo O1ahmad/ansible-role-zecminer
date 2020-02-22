@@ -52,7 +52,7 @@ _The following variables can be customized to control various aspects of this in
 - dedicated service user and group used by `zecminer` for privilege separation (see [here](https://www.beyondtrust.com/blog/entry/how-separation-privilege-improves-security) for details)
 
 `install_type: <archive>` (**default**: archive)
-- **archive**: currently compatible with **tar** formats, installation of Zecminer via compressed archives results in the direct download of its component binaries, consisting of the `zecminer` mining software.
+- **archive**: currently compatible with **tar** formats, installation of **Zecminer** via compressed archives results in the direct download of its component binaries, consisting of the `zecminer` mining software.
 
   **note:** archived installation binaries can be obtained from the official [releases](https://github.com/nanopool/ewbf-miner/releases) site or those generated from development/custom sources.
 
@@ -67,13 +67,13 @@ _The following variables can be customized to control various aspects of this in
 
 #### Config
 
-Zecminer supports specification of various options controlling aspects of the Zcash miner's behavior and operational profile. Each configuration can be expressed via either the tool's command-line interface or within in an INI-sytle configuration file. The following details the facilities provided by this role to manage the contents of the aforementioned configuration file.
+**Zecminer** supports specification of various options controlling aspects of the Zcash miner's behavior and operational profile. Each configuration can be expressed via either the tool's command-line interface or within in an INI-sytle configuration file. The following details the facilities provided by this role to manage the contents of the aforementioned configuration file.
 
 In typical `INI` or `TOML` fashion, individual sets of configurations consist of definitions representing config sections and associated setting key-value pairs. These sections and settings are made up of common miner options and custom Zcash server pool properties to access.
 
 Reference [here](https://zec.nanopool.org/) for a list of server pool connection settings and [here](https://gist.github.com/0x0I/8a02072f7a2729bd8a0ab626d89c16d2) for an example config.
 
-Each of these configurations can be expressed using the `zecminer_configs` hash, which contains a list of various Zecminer configuration options (hash) objects organized according to the following:
+Each of these configurations can be expressed using the `zecminer_configs` hash, which contains a list of various `zecminer` configuration options (hash) objects organized according to the following:
 * common - miner configuration options common to all server connections
 * server - custom server connection and operational configuration options to the specified server
 
@@ -114,7 +114,7 @@ _The following variables can be customized to manage the service's **systemd** [
 Supporting full expression of `zecminer`'s [cli](https://gist.github.com/0x0I/8a57be009fcdb3a006262309aadd741c) and, conserquently the full set of configuration options as referenced and described above, this variable enables the launch to be customized according to the user's exact specification.
 
 `custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
-- hash of settings used to customize the `[Service]` unit configuration and execution environment of the *Zecminer* **systemd** service.
+- hash of settings used to customize the `[Service]` unit configuration and execution environment of the `zecminer` **systemd** service.
 
 #### Uninstall
 
@@ -139,7 +139,7 @@ default example:
   - role: 0x0I.zecminer
 ```
 
-download and install specific version of Zecminer binaries:
+download and install specific version of `zecminer` binaries:
 ```
 - hosts: all
   roles:

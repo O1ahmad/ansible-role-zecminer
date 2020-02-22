@@ -8,7 +8,7 @@ install_type: archive
 archive_url: https://github.com/nanopool/ewbf-miner/releases/download/v0.3.4b/Zec.miner.0.3.4b.Linux.Bin.tar.gz
 install_dir: /opt/zecminer
 
-config_dir: /etc/zecminer
+config_dir: "{{ install_dir }}"
 
 zecminer_config: {}
 

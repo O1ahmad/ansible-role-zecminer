@@ -76,22 +76,22 @@ Reference [here](https://zec.nanopool.org/) for a list of server pool connection
 `config_dir: </path/to/configuration/dir>` (**default**: `{{ install_dir }}`)
 - path on target host where the `zecminer` configuration file should be rendered
 
-Each of these configurations can be expressed using the `zecminer_configs` hash, which contains a list of various `zecminer` configuration options (hash) objects organized according to the following:
+Each of these configurations can be expressed using the `zecminer_config` hash, which contains a list of various `zecminer` configuration options (hash) objects organized according to the following:
 * common - miner configuration options common to all server connections
 * server - custom server connection and operational configuration options to the specified server
 
-Each `zecminer_configs` entry is a hash representing the equivalent of a configuration section as expected to be expressed by the `zecminer` server. As previously described, these hashes are structured by config section and associated key-value setting pairs. 
+Each `zecminer_config` entry is a hash representing the equivalent of a configuration section as expected to be expressed by the `zecminer` server. As previously described, these hashes are structured by config section and associated key-value setting pairs. 
 
-`[zecminer_configs: <entry>:] name: <common|server>` (**default**: *required*)
+`[zecminer_config: <entry>:] name: <common|server>` (**default**: *required*)
 - name of the configuration section to render
 
-`[zecminer_configs: <entry>:] settings: <YAML>` (**default**: )
+`[zecminer_config: <entry>:] settings: <YAML>` (**default**: )
 - specifies parameters that manage various aspects of the Zcash miner's operations
 
 ###### Example
 
  ```yaml
-  zecminer_configs:
+  zecminer_config:
     - name: common
       settings:
         log: 0
@@ -158,7 +158,7 @@ enable debug logging for troubleshooting purposes:
   roles:
   - role: 0x0I.zecminer
     vars:
-      zecminer_configs:
+      zecminer_config:
         - name: common
           settings:
             log: 1
@@ -173,7 +173,7 @@ enable mining API server on custom listening port (via API command-line + config
     vars:
       extra_run_args:
         - --api 0.0.0.0:12345
-      zecminer_configs:
+      zecminer_config:
         - name: common
           settings:
             api: 0.0.0.0:12345
@@ -181,7 +181,7 @@ enable mining API server on custom listening port (via API command-line + config
 
 configure main and backup server pools for mining operations:
  ```yaml
-  zecminer_configs:
+  zecminer_config:
     # main server pool connection properties
     - name: server
       settings:

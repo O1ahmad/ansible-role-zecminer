@@ -7,8 +7,11 @@ services:
   - docker
 
 env:
-  global:
-    - ROLE_NAME: zecminer
+  - OS_VERSION=centos-7
+  - OS_VERSION=fedora-30
+  - OS_VERSION=fedora-31
+  - OS_VERSION=ubuntu-1804
+  - OS_VERSION=ubuntu-1904
 
 before_script:
   - sudo pip install ansible-lint yamllint
@@ -16,7 +19,7 @@ before_script:
 script:
   - ansible-lint -c ./test/lint/.ansible-lint .
   - yamllint --config-file ./test/lint/yaml-lint.yml .
-  - bundle exec kitchen test uninstall-centos-7
+  - bundle exec kitchen test uninstall-${OS_VERSION}
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

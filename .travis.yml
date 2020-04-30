@@ -11,7 +11,7 @@ env:
   - OS_VERSION=fedora-30
   - OS_VERSION=fedora-31
   - OS_VERSION=ubuntu-1804
-  - OS_VERSION=ubuntu-1904
+  - OS_VERSION=ubuntu-1910
 
 before_script:
   - sudo pip install ansible-lint yamllint

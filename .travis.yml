@@ -1,4 +1,5 @@
 ---
+dist: focal
 language: ruby
 rvm:
   - 2.6.3
@@ -8,16 +9,15 @@ services:
 
 env:
   - OS_VERSION=centos-7
-  - OS_VERSION=fedora-30
   - OS_VERSION=fedora-31
+  - OS_VERSION=fedora-32
   - OS_VERSION=ubuntu-1804
-  - OS_VERSION=ubuntu-1910
 
 before_script:
   - sudo pip install ansible-lint yamllint
 
 script:
-  - ansible-lint -c ./test/lint/.ansible-lint .
+  - ansible-lint -x 208 -c ./test/lint/.ansible-lint .
   - yamllint --config-file ./test/lint/yaml-lint.yml .
   - bundle exec kitchen test uninstall-${OS_VERSION}
 

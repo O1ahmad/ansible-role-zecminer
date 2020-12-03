@@ -44,10 +44,6 @@ Variables are available and organized according to the following software & mach
 
 #### Install
 
-`zecminer`can be installed using compressed archives (`.tar`, `.zip`), downloaded and extracted from various sources.
-
-_The following variables can be customized to control various aspects of this installation process, ranging from software version and source location of binaries to the installation directory where they are stored:_
-
 `zecminer_user: <service-user-name>` (**default**: *zecminer*)
 - dedicated service user and group used by `zecminer` for privilege separation (see [here](https://www.beyondtrust.com/blog/entry/how-separation-privilege-improves-security) for details)
 
@@ -107,10 +103,6 @@ Each `zecminer_config` entry is a hash representing the equivalent of a configur
   
 #### Launch
 
-This role supports launching a `zecminer` utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool, which manages the service as a background process or daemon subject to the configuration and execution potential provided by its underlying management framework.
-
-_The following variables can be customized to manage the service's **systemd** [Service] unit definition and execution profile/policy:_
-
 `extra_run_args: <zecminer-cli-options>` (**default**: `[]`)
 - list of `zecminer` commandline arguments to pass to the binary at runtime for customizing launch
 
@@ -120,10 +112,6 @@ Supporting full expression of `zecminer`'s [cli](https://gist.github.com/0x0I/8a
 - hash of settings used to customize the `[Service]` unit configuration and execution environment of the `zecminer` **systemd** service.
 
 #### Uninstall
-
-Support for uninstalling and removing artifacts necessary for provisioning allows for users/operators to return a target host to its configured state prior to application of this role. This can be useful for recycling nodes and perhaps providing more graceful/managed transitions between tooling upgrades.
-
-_The following variable(s) can be customized to manage this uninstall process:_
 
 `perform_uninstall: <true | false>` (**default**: `false`)
 - whether to uninstall and remove all artifacts and remnants of this `zecminer` installation on a target host (**see**: `handlers/main.yml` for details)
